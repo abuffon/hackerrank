@@ -78,4 +78,3 @@ class SolutionHeightBinaryTree {
         System.out.println(height);
     }	
 }
-

@@ -1,5 +1,7 @@
 package hackerrank;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 /*class Node {
@@ -24,10 +26,24 @@ class SolutionLevelOrderTraversal {
     	Node right;
 	*/
 	public static void levelOrder(Node root) {
-      
-      
+		if (root != null) {
+			List<Node> list = new ArrayList<Node>();
+			list.add(root);
+			
+			while (!list.isEmpty()) {
+				Node n = list.remove(0);
+				
+				if (n.left != null)
+					list.add(n.left);
+				
+				if (n.right != null)
+					list.add(n.right);
+				
+				System.out.print(n.data + " ");
+			}
+		}
     }
-
+	
 	public static Node insert(Node root, int data) {
         if(root == null) {
             return new Node(data);

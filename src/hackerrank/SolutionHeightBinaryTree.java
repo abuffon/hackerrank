@@ -1,5 +1,6 @@
 package hackerrank;
 
+import java.util.Optional;
 import java.util.Scanner;
 
 //class Node {
@@ -23,31 +24,37 @@ class SolutionHeightBinaryTree {
     	Node right;
 	*/
 	public static int height(Node root) {
-		if (!isLeaf(root)) {
-			int hr = 0, hl = 0;
-			if (isChild(root.left)) {
-				hl = height(root.left);
-			}
-			if (isChild(root.right)) {
-				hr = height(root.right);
-			}
-			
-			if (hl > hr)
-				return hl + 1;
-			else
-				return hr + 1;
-		}
-		
-		return 0;
+		Integer leftHeight = Optional.ofNullable(root.left).map(n -> 1 + height(n)).orElse(0);
+		Integer rightHeight = Optional.ofNullable(root.right).map(n -> 1 + height(n)).orElse(0);
+		return Math.max(leftHeight, rightHeight);
     }
 	
-	private static boolean isLeaf(Node n) {
-        return n == null || (n.left == null && n.right == null);
-    }
-	
-	private static boolean isChild(Node n) {
-		return n != null;
-	}
+//	public static int height(Node root) {
+//		if (!isLeaf(root)) {
+//			int hr = 0, hl = 0;
+//			if (isChild(root.left)) {
+//				hl = height(root.left);
+//			}
+//			if (isChild(root.right)) {
+//				hr = height(root.right);
+//			}
+//			
+//			if (hl > hr)
+//				return hl + 1;
+//			else
+//				return hr + 1;
+//		}
+//		
+//		return 0;
+//    }
+//	
+//	private static boolean isLeaf(Node n) {
+//        return n == null || (n.left == null && n.right == null);
+//    }
+//	
+//	private static boolean isChild(Node n) {
+//		return n != null;
+//	}
 
 	public static Node insert(Node root, int data) {
         if(root == null) {

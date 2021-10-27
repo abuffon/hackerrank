@@ -9,6 +9,7 @@ import java.util.concurrent.*;
 import java.util.function.*;
 import java.util.regex.*;
 import java.util.stream.*;
+
 import static java.util.stream.Collectors.joining;
 import static java.util.stream.Collectors.toList;
 
@@ -21,25 +22,40 @@ class ResultContacts {
 	 * 2D_STRING_ARRAY queries as parameter.
 	 */
 
+	static Predicate<String> add = (s) -> s.equals("add");
+	static Predicate<String> find = (s) -> s.equals("find");
+	
 	public static List<Integer> contacts(List<List<String>> queries) {
 		List<Integer> result = new ArrayList<Integer>();
-		List<String> names = new ArrayList<String>();
+		List<String> namesDB = new ArrayList<String>();
 		
-		
-		for (List<String> list : queries) {
-			if (list.get(0).equals("add")) {
-				names.add(list.get(1));
-			} else if (list.get(0).equals("find")) {
-				Integer count = 0;
-				for (String name : names) {
-					if (name.startsWith(list.get(1))) {
-						count++;
-					}
-				}
-				result.add(count);
+		queries.forEach(list -> {
+			if (add.test(list.get(0))) {
+				namesDB.add(list.get(1));
+			} else if (find.test(list.get(0))) {
+				result.add(Math.toIntExact(namesDB.stream().filter(s -> s.startsWith(list.get(1))).count()));
 			}
 			
-		}
+		});
+		
+//		List<Integer> result = new ArrayList<Integer>();
+//		List<String> names = new ArrayList<String>();
+//		
+//		
+//		for (List<String> list : queries) {
+//			if (list.get(0).equals("add")) {
+//				names.add(list.get(1));
+//			} else if (list.get(0).equals("find")) {
+//				Integer count = 0;
+//				for (String name : names) {
+//					if (name.startsWith(list.get(1))) {
+//						count++;
+//					}
+//				}
+//				result.add(count);
+//			}
+//			
+//		}
 		return result;
 	}
 

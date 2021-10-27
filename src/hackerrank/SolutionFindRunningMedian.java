@@ -22,8 +22,16 @@ class ResultFindRunningMedian {
      */
 
     public static List<Double> runningMedian(List<Integer> a) {
-    	Stream<Integer> sorted = a.stream().sorted();
-    	sorted.forEach(System.out::print);
+    	List<Double> result = new ArrayList<Double>();
+    	List<Integer> a2 = new ArrayList<Integer>();
+    	
+    	a.forEach(i -> {
+    		a2.add(i);
+    		Stream<Integer> sorted = a2.stream().sorted();
+    		
+    		
+    		result.add(0.0);
+    	});
     	
     // Write your code here
     	return new ArrayList<Double>();

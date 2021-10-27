@@ -22,28 +22,55 @@ class Result {
 	 */
 
 	public static String isBalanced(String s) {
-		// Write your code here
-		
-		List<String> openBrackets = new ArrayList<String>();
+		Stack<String> stack = new Stack<String>();
 		String[] split = s.split("");
+		
 		for (int i = 0; i < split.length; i++) {
-			if (split[i].equals("{") || split[i].equals("[") || split[i].equals("(")) {
-				openBrackets.add(split[i]);
+			if (isOpenBracket(split[i])) {
+				stack.add(split[i]);
 			} else {
-				String closeBracket = split[i];
-				if (openBrackets.get(openBrackets.size() - 1).concat(closeBracket).equals("()")
-						|| openBrackets.get(openBrackets.size() - 1).concat(closeBracket).equals("[]")
-						|| openBrackets.get(openBrackets.size() - 1).concat(closeBracket).equals("{}")) {
-					openBrackets.remove(openBrackets.size() - 1);
-				}
+				if (isCorrectClose(stack.peek(), split[i])) {
+					stack.pop();
+				} 
 			}
 		}
 		
-		if (openBrackets.isEmpty())
+		if (stack.isEmpty())
 			return "YES";
 		else
 			return "NO";
 	}
+	
+	private static boolean isOpenBracket(String open) {
+		return open.equals("{") || open.equals("[") || open.equals("(");
+	}
+	
+	private static boolean isCorrectClose(String open, String close) {
+		String openClose = open + close;
+		return openClose.equals("{}") || openClose.equals("[]") || openClose.equals("()");
+	}
+	
+//	public static String isBalanced(String s) {
+//		List<String> openBrackets = new ArrayList<String>();
+//		String[] split = s.split("");
+//		for (int i = 0; i < split.length; i++) {
+//			if (split[i].equals("{") || split[i].equals("[") || split[i].equals("(")) {
+//				openBrackets.add(split[i]);
+//			} else {
+//				String closeBracket = split[i];
+//				if (openBrackets.get(openBrackets.size() - 1).concat(closeBracket).equals("()")
+//						|| openBrackets.get(openBrackets.size() - 1).concat(closeBracket).equals("[]")
+//						|| openBrackets.get(openBrackets.size() - 1).concat(closeBracket).equals("{}")) {
+//					openBrackets.remove(openBrackets.size() - 1);
+//				}
+//			}
+//		}
+//		
+//		if (openBrackets.isEmpty())
+//			return "YES";
+//		else
+//			return "NO";
+//	}
 
 }
 

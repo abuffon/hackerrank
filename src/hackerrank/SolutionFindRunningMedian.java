@@ -1,16 +1,18 @@
 package hackerrank;
 
-import java.io.*;
-import java.math.*;
-import java.security.*;
-import java.text.*;
-import java.util.*;
-import java.util.concurrent.*;
-import java.util.function.*;
-import java.util.regex.*;
-import java.util.stream.*;
 import static java.util.stream.Collectors.joining;
 import static java.util.stream.Collectors.toList;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.PriorityQueue;
+import java.util.stream.IntStream;
 
 class ResultFindRunningMedian {
 
@@ -21,20 +23,46 @@ class ResultFindRunningMedian {
      * The function accepts INTEGER_ARRAY a as parameter.
      */
 
+	private static PriorityQueue<Integer> maxHeap = new PriorityQueue<Integer>(Collections.reverseOrder());
+	private static PriorityQueue<Integer> minHeap = new PriorityQueue<Integer>();
+	
     public static List<Double> runningMedian(List<Integer> a) {
     	List<Double> result = new ArrayList<Double>();
     	List<Integer> a2 = new ArrayList<Integer>();
     	
-    	a.forEach(i -> {
-    		a2.add(i);
-    		List<Integer> collect = a2.stream().sorted().collect(Collectors.toList());
-    		if (collect.size()%2==0) {
-    			int index = (int)Math.floor(collect.size()/2.0);
-    			result.add((collect.get(index) + collect.get(index - 1)) / 2.0);
+    	a.forEach(n -> {
+    		if (maxHeap.isEmpty()) {
+    			maxHeap.add(n);
+    		} else if (maxHeap.size() == minHeap.size()) {
+    			if (n < minHeap.peek()) {
+    				maxHeap.add(n);
+    			} else {
+    				minHeap.add(n);
+    				maxHeap.add(minHeap.remove());
+    			}
     		} else {
-    			int index = (int)Math.floor(collect.size()/2.0);
-    			result.add(collect.get(index).doubleValue());
+    			if (n > minHeap.peek()) {
+    				minHeap.add(n);
+    			} else {
+                    maxHeap.add(n);
+                    minHeap.add(maxHeap.remove());
+                }
     		}
+
+    		if (maxHeap.size() == minHeap.size()) {
+    			result.add((maxHeap.peek() + minHeap.peek()) / 2.0);
+    		} else {
+    			result.add((maxHeap.peek().doubleValue()));
+    		}
+//    		a2.add(i);
+//    		List<Integer> collect = a2.stream().sorted().collect(Collectors.toList());
+//    		if (collect.size()%2==0) {
+//    			int index = (int)Math.floor(collect.size()/2.0);
+//    			result.add((collect.get(index) + collect.get(index - 1)) / 2.0);
+//    		} else {
+//    			int index = (int)Math.floor(collect.size()/2.0);
+//    			result.add(collect.get(index).doubleValue());
+//    		}
     	});
     	
     	return result;

@@ -27,15 +27,36 @@ class ResultFindRunningMedian {
     	
     	a.forEach(i -> {
     		a2.add(i);
-    		Stream<Integer> sorted = a2.stream().sorted();
-    		
-    		
-    		result.add(0.0);
+    		List<Integer> collect = a2.stream().sorted().collect(Collectors.toList());
+    		if (collect.size()%2==0) {
+    			int index = (int)Math.floor(collect.size()/2.0);
+    			result.add((collect.get(index) + collect.get(index - 1)) / 2.0);
+    		} else {
+    			int index = (int)Math.floor(collect.size()/2.0);
+    			result.add(collect.get(index).doubleValue());
+    		}
     	});
     	
-    // Write your code here
-    	return new ArrayList<Double>();
+    	return result;
     }
+//    public static List<Double> runningMedian(List<Integer> a) {
+//    	List<Double> result = new ArrayList<Double>();
+//    	List<Integer> a2 = new ArrayList<Integer>();
+//    	
+//    	a.forEach(i -> {
+//    		a2.add(i);
+//    		List<Integer> collect = a2.stream().sorted().collect(Collectors.toList());
+//    		if (collect.size()%2==0) {
+//    			int index = (int)Math.floor(collect.size()/2.0);
+//    			result.add((collect.get(index) + collect.get(index - 1)) / 2.0);
+//    		} else {
+//    			int index = (int)Math.floor(collect.size()/2.0);
+//    			result.add(collect.get(index).doubleValue());
+//    		}
+//    	});
+//    	
+//    	return result;
+//    }
 
 }
 

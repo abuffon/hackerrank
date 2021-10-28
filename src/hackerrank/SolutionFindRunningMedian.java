@@ -28,7 +28,6 @@ class ResultFindRunningMedian {
 	
     public static List<Double> runningMedian(List<Integer> a) {
     	List<Double> result = new ArrayList<Double>();
-    	List<Integer> a2 = new ArrayList<Integer>();
     	
     	a.forEach(n -> {
     		if (maxHeap.isEmpty()) {
@@ -37,32 +36,27 @@ class ResultFindRunningMedian {
     			if (n < minHeap.peek()) {
     				maxHeap.add(n);
     			} else {
-    				minHeap.add(n);
     				maxHeap.add(minHeap.remove());
+    				minHeap.add(n);
     			}
     		} else {
-    			if (n > minHeap.peek()) {
-    				minHeap.add(n);
+    			if (n < maxHeap.peek()) {
+    				minHeap.add(maxHeap.remove());
+    				maxHeap.add(n);
     			} else {
-                    maxHeap.add(n);
-                    minHeap.add(maxHeap.remove());
-                }
+    				minHeap.add(n);
+    			}
     		}
 
+//    		System.out.println("maxHeap " + maxHeap);
+//    		System.out.println("minHeap " + minHeap);
     		if (maxHeap.size() == minHeap.size()) {
+//    			System.out.println("value " + (maxHeap.peek() + minHeap.peek()) / 2.0);
     			result.add((maxHeap.peek() + minHeap.peek()) / 2.0);
     		} else {
-    			result.add((maxHeap.peek().doubleValue()));
+//    			System.out.println("value " + maxHeap.peek().doubleValue());
+    			result.add(maxHeap.peek().doubleValue());
     		}
-//    		a2.add(i);
-//    		List<Integer> collect = a2.stream().sorted().collect(Collectors.toList());
-//    		if (collect.size()%2==0) {
-//    			int index = (int)Math.floor(collect.size()/2.0);
-//    			result.add((collect.get(index) + collect.get(index - 1)) / 2.0);
-//    		} else {
-//    			int index = (int)Math.floor(collect.size()/2.0);
-//    			result.add(collect.get(index).doubleValue());
-//    		}
     	});
     	
     	return result;

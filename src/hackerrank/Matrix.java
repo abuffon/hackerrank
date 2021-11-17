@@ -3,9 +3,9 @@ package hackerrank;
 public class Matrix {
 
 	public static void main(String[] args) {
-		//printMatrix(updateMatrix(new int[][] { { 0, 0, 0 }, { 0, 1, 0 }, { 1, 1, 1 }, { 1, 1, 1 } }));
-		//printMatrix(updateMatrix(new int[][] { { 1, 1, 1 }, { 1, 1, 1 }, { 0, 0, 0 }, { 0, 1, 0 }, { 1, 1, 1 } }));
-		printMatrix(updateMatrix(new int[][] { { 1, 1, 1 }, { 1, 1, 1 }, { 1, 1, 0 }, { 1, 1, 1 }, { 1, 1, 1 } }));
+		//PrintUtils.printMatrix(updateMatrix(new int[][] { { 0, 0, 0 }, { 0, 1, 0 }, { 1, 1, 1 }, { 1, 1, 1 } }));
+		//PrintUtils.printMatrix(updateMatrix(new int[][] { { 1, 1, 1 }, { 1, 1, 1 }, { 0, 0, 0 }, { 0, 1, 0 }, { 1, 1, 1 } }));
+		PrintUtils.printMatrix(updateMatrix(new int[][] { { 1, 1, 1 }, { 1, 1, 1 }, { 1, 1, 0 }, { 1, 1, 1 }, { 1, 1, 1 } }));
 	}
 	
 	public static int[][] updateMatrix(int[][] mat) {
@@ -16,7 +16,7 @@ public class Matrix {
                 else mat[i][j] = maxResult;
             }
         }
-        printMatrix(mat);
+        PrintUtils.printMatrix(mat);
         for (int i = 0; i <  mat.length; i++) {
             for (int j = 0; j < mat[0].length; j++) {
                 if (mat[i][j] == 0) continue;
@@ -24,7 +24,7 @@ public class Matrix {
                 if (j > 0) mat[i][j] = Math.min(mat[i][j - 1] + 1, mat[i][j]); 
             }
         }
-        printMatrix(mat);
+        PrintUtils.printMatrix(mat);
         for (int i = mat.length - 1; i >= 0; i--) {        	
             for (int j = mat[0].length - 1; j >= 0; j--) {
             	//System.out.println(i + " " + j);
@@ -85,15 +85,5 @@ public class Matrix {
 			if ((n+1) < mat[m].length && mat[m][n+1] == 1 && distance[m][n+1] == -1) {
 				distance[m][n+1] = d;
 			}
-	}
-	
-	private static void printMatrix(int [][] mat) {
-		System.out.println();
-		for (int m = 0; m < mat.length; m++) {
-			for (int n = 0; n < mat[m].length; n++) {
-				System.out.print(mat[m][n] + " ");
-			}
-			System.out.println();
-		}
 	}
 }
